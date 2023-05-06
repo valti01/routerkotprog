@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "routerwebkert": {
+      "hosting": {
+        "Webkert": [
+          "routerwebkert"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "routerwebkert"
+  }
+}

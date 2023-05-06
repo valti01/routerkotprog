@@ -1,0 +1,49 @@
+<div class="user-info-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>User Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="user-info-item">
+        <strong>Email:</strong> {{ (user | async)?.email }}
+      </div>
+      <div class="user-info-item">
+        <strong>First Name: </strong>
+        <span *ngIf="!editFirstName">
+          {{ (user | async)?.firstname }}
+        </span>
+        <span *ngIf="editFirstName">
+          <mat-form-field appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" [formControl]="firstNameControl">
+          </mat-form-field>
+          <div class="button-group">
+            <button mat-raised-button color="primary" (click)="saveFirstName(); showModifyButton = true">Save</button>
+            <button mat-raised-button (click)="editFirstName = false; showModifyButton = true">Cancel</button>
+          </div>
+        </span>
+        <button mat-stroked-button color="primary" *ngIf="showModifyButton" (click)="editFirstName = true; showModifyButton = false">Modify</button>
+      </div>
+      <div class="user-info-item">
+        <strong>Last Name: </strong>
+        <span *ngIf="!editLastName">
+          {{ (user | async)?.lastname }}
+        </span>
+        <span *ngIf="editLastName">
+          <mat-form-field appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" [formControl]="lastNameControl">
+          </mat-form-field>
+          <div class="button-group">
+            <button mat-raised-button color="primary" (click)="saveLastName(); showModifyButton = true">Save</button>
+            <button mat-raised-button (click)="editLastName = false; showModifyButton = true">Cancel</button>
+          </div>
+        </span>
+        <button mat-stroked-button color="primary" *ngIf="showModifyButton" (click)="editLastName = true; showModifyButton = false">Modify</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <div class="button-group">
+    <button mat-raised-button color="primary" (click)="goBack()">Back</button>
+  </div>
+</div>

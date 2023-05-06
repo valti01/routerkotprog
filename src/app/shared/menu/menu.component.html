@@ -1,0 +1,26 @@
+<mat-nav-list>
+  <a mat-list-item routerLink="/main" (click)="close()">
+    <mat-icon>grid_view</mat-icon>
+    <span>Home</span>
+  </a>
+    <a mat-list-item routerLink="/login" (click)="close()" *ngIf="!loggedInUser">
+        <mat-icon>login</mat-icon>
+        <span>Login</span>
+    </a>
+    <a mat-list-item routerLink="/login" (click)="close(true)" *ngIf="loggedInUser">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+    </a>
+    <a mat-list-item routerLink="/signup" (click)="close()" *ngIf="!loggedInUser">
+        <mat-icon>app_registration</mat-icon>
+        <span>Register</span>
+    </a>
+    <a mat-list-item routerLink="/routers" (click)="close()">
+        <mat-icon>collections</mat-icon>
+        <span>Routers</span>
+    </a>
+    <a mat-list-item routerLink="/profile" (click)="close()" *ngIf="loggedInUser">
+        <mat-icon>collections</mat-icon>
+        <span>Profile</span>
+    </a>
+</mat-nav-list>

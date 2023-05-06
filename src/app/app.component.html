@@ -1,0 +1,26 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <app-menu (selectedPage)="changePage($event)" [currentPage]="page" *ngIf="page" (onCloseSidenav)="onClose($event, sidenav)" [loggedInUser]="loggedInUser" (onLogout)="logout($event)"></app-menu>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <div fxHide.gt-xs>
+        <button mat-icon-button (click)="onToggleSidenav(sidenav)">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <div>Router config site</div>
+      <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+        <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+          <li *ngIf="loggedInUser"><a routerLink="/profile">Profile</a></li>
+          <li *ngIf="!(loggedInUser)"><a routerLink="/main">Home</a></li>
+          <li *ngIf="!(loggedInUser)"><a routerLink="/login">Login</a></li>
+          <li *ngIf="loggedInUser"><a routerLink="/login" (click)="logout()">Logout</a></li>
+          <li *ngIf="!(loggedInUser)"><a routerLink="/signup">Register</a></li>
+          <li><a routerLink="/routers">Routers</a></li>
+        </ul>
+      </div>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

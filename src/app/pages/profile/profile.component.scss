@@ -1,0 +1,39 @@
+.user-info-container {
+  display: flex;
+  justify-content: center;
+  margin: 50px auto;
+  height: 100%;
+  max-width: 800px;
+}
+
+mat-card {
+  width: 100%;
+}
+
+.user-info-item {
+  margin: 20px 0;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+button {
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 800px) {
+  .user-info-container {
+    flex-direction: column;
+  }
+
+  mat-card {
+    max-width: 600px;
+  }
+}
