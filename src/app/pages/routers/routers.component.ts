@@ -53,7 +53,6 @@ export class RoutersComponent implements OnInit {
   }
 
   async onSubmit() {
-
     this.authService.isUserLoggedIn().subscribe(curruser =>{
       if(curruser){
         const router: Router = {
@@ -62,12 +61,18 @@ export class RoutersComponent implements OnInit {
           ip: this.addRouterForm.get('ip')?.value as string,
           name: this.addRouterForm.get('name')?.value as string,
         };
-        this.routersService.create(router).then(_ => {
-          console.log('Router added successfully.');
-        }).catch(error => {
-          console.error(error);
-        })
-      }else{
+        this.routersService.checkIfIPExists(curruser.uid, router.ip).subscribe((exists: boolean) => {
+          if (!exists) {
+            this.routersService.create(router).then(_ => {
+              console.log('Router added successfully.');
+            }).catch(error => {
+              console.error(error);
+            })
+          } else {
+            console.log('A router with this IP address already exists.');
+          }
+        });
+      } else {
         console.log('current logged in user has a value of null.')
       }
     })

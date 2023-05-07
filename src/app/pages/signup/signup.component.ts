@@ -5,7 +5,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { User } from '../../shared/models/User';
 import { UserService } from '../../shared/services/user.service';
 import {DateFormatPipe} from "../../shared/pipes/date-format.pipe";
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -22,7 +22,7 @@ export class SignupComponent{
     })
   });
 
-  constructor(private location: Location, private authService: AuthService, private userService: UserService, private dateFormatPipe : DateFormatPipe) { }
+  constructor(private location: Location,private router: Router, private authService: AuthService, private userService: UserService, private dateFormatPipe : DateFormatPipe) { }
 
   ngOnInit(): void {
   }
@@ -41,12 +41,14 @@ export class SignupComponent{
       };
       this.userService.create(user).then(_ => {
         console.log('User added successfully.');
+        this.router.navigateByUrl('/routers');
       }).catch(error => {
         console.error(error);
       })
     }).catch(error => {
       console.error(error);
     });
+
   }
 
   goBack() {

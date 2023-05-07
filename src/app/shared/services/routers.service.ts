@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {User} from "../models/User";
 import {Router} from "../models/Router";
+import {map} from "rxjs/operators";
 
 
 @Injectable({
@@ -32,5 +33,16 @@ export class RoutersService {
     return this.afs
       .collection<Router>(this.collectionName, ref => ref.where('ownerId', '==', userID))
       .valueChanges({ idField: 'id' });
+  }
+
+  checkIfIPExists(userID: string, newip: string): Observable<boolean> {
+    return this.afs
+      .collection<Router>(this.collectionName, ref => ref.where('ownerId', '==', userID).where('ip', '==', newip))
+      .valueChanges({ idField: 'id' })
+      .pipe(
+        map((routers: Router[]) => {
+          return routers.length > 0;
+        })
+      );
   }
 }
