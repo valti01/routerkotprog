@@ -37,7 +37,7 @@ export class RoutersService {
 
   checkIfIPExists(userID: string, newip: string): Observable<boolean> {
     return this.afs
-      .collection<Router>(this.collectionName, ref => ref.where('ownerId', '==', userID).where('ip', '==', newip))
+      .collection<Router>(this.collectionName, ref => ref.where('ownerId', '==', userID).where('ip', '==', newip).limit(1))
       .get()
       .pipe(
         map((querySnapshot: QuerySnapshot<Router>) => {
