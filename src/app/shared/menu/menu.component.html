@@ -15,7 +15,7 @@
         <mat-icon>app_registration</mat-icon>
         <span>Register</span>
     </a>
-    <a mat-list-item routerLink="/routers" (click)="close()">
+    <a mat-list-item routerLink="/routers" (click)="close()" *ngIf="loggedInUser">
         <mat-icon>collections</mat-icon>
         <span>Routers</span>
     </a>

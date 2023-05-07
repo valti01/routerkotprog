@@ -17,7 +17,7 @@
           <li *ngIf="!(loggedInUser)"><a routerLink="/login">Login</a></li>
           <li *ngIf="loggedInUser"><a routerLink="/login" (click)="logout()">Logout</a></li>
           <li *ngIf="!(loggedInUser)"><a routerLink="/signup">Register</a></li>
-          <li><a routerLink="/routers">Routers</a></li>
+          <li *ngIf="loggedInUser"><a routerLink="/routers">Routers</a></li>
         </ul>
       </div>
     </mat-toolbar>
