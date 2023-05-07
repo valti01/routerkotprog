@@ -23,6 +23,7 @@ export class RoutersComponent implements OnInit {
   });
 
   routers: Observable<Router[]> | undefined;
+  uid: string | undefined;
 
   constructor(
     private location: Location,
@@ -36,6 +37,7 @@ export class RoutersComponent implements OnInit {
     this.authService.isUserLoggedIn().subscribe(curruser =>{
       if(curruser){
         console.log(curruser.uid)
+        this.uid = curruser.uid;
         this.routers = this.routersService.loadRouters(curruser.uid);
       } else {
         console.log('current logged in user has a value of null.');
@@ -53,29 +55,27 @@ export class RoutersComponent implements OnInit {
   }
 
   async onSubmit() {
-    this.authService.isUserLoggedIn().subscribe(curruser =>{
-      if(curruser){
-        const router: Router = {
-          ownerId: curruser.uid as string,
-          id: this.afs.createId(),
-          ip: this.addRouterForm.get('ip')?.value as string,
-          name: this.addRouterForm.get('name')?.value as string,
-        };
-        this.routersService.checkIfIPExists(curruser.uid, router.ip).subscribe((exists: boolean) => {
-          if (!exists) {
-            this.routersService.create(router).then(_ => {
-              console.log('Router added successfully.');
-            }).catch(error => {
-              console.error(error);
-            })
-          } else {
-            console.log('A router with this IP address already exists.');
-          }
-        });
-      } else {
-        console.log('current logged in user has a value of null.')
-      }
-    })
+    if (this.uid!=undefined) {
+      const router: Router = {
+        ownerId: this.uid,
+        id: this.afs.createId(),
+        ip: this.addRouterForm.get('ip')?.value as string,
+        name: this.addRouterForm.get('name')?.value as string,
+      };
+      this.routersService.checkIfIPExists(this.uid, router.ip).subscribe((exists: boolean) => {
+        if (exists) {
+          this.routersService.create(router).then(_ => {
+            console.log('Router added successfully.');
+          }).catch(error => {
+            console.error(error);
+          })
+        } else {
+          console.log('A router with this IP address already exists.');
+        }
+      });
+    } else {
+      console.log('current logged in user has a value of null.')
+    }
   }
 
   goBack() {

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {AngularFirestore} from '@angular/fire/compat/firestore';
+import {AngularFirestore, QuerySnapshot} from '@angular/fire/compat/firestore';
 import {User} from "../models/User";
 import {Router} from "../models/Router";
 import {map} from "rxjs/operators";
@@ -38,10 +38,10 @@ export class RoutersService {
   checkIfIPExists(userID: string, newip: string): Observable<boolean> {
     return this.afs
       .collection<Router>(this.collectionName, ref => ref.where('ownerId', '==', userID).where('ip', '==', newip))
-      .valueChanges({ idField: 'id' })
+      .get()
       .pipe(
-        map((routers: Router[]) => {
-          return routers.length > 0;
+        map((querySnapshot: QuerySnapshot<Router>) => {
+          return querySnapshot.size === 0;
         })
       );
   }
